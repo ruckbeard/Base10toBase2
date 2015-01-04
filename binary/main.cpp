@@ -4,20 +4,22 @@
 #include <string>
 #include <algorithm>
 
+using namespace std;
+
 bool isOdd(int rem);
-std::vector<int> strToInt(std::string str);
+vector<int> strToInt(string str);
 
 int main()
 {
 	//declare variables
 	int num;
 	char tmp;
-	std::string binary;
-	std::vector<int> value;
+	string binary;
+	vector<int> value;
 	//get a whole number from user to conver into base 2
-	std::cout << "Enter a whole number: ";
-	std::cin >> num;
-	std::cout << "The number is in base 10 is " << num << "\n";
+	cout << "Enter a whole number: ";
+	cin >> num;
+	cout << "The number is in base 10 is " << num << "\n";
 	//right shift num until it equals 1 and check if even or odd, add binary digit accordingly to vector
 	while (num != 1) {
 		if (isOdd(num) == true) {
@@ -30,22 +32,22 @@ int main()
 	//add last digit to the number, always is 1
 	value.push_back(49);
 	//reverse vector
-	std::reverse(value.begin(), value.end());
+	reverse(value.begin(), value.end());
 	//change vector<int> into string
 	for (int i = 0; i < value.size(); i++) {
 		tmp = value[i];
 		binary += tmp;
 	}
 	//output the string
-	std::cout << "The number in base 2 is " << binary << std::endl;
+	cout << "The number in base 2 is " << binary << endl;
 	//convert a base 2 number into base 10
-	std::cout << "Enter a binary number: ";
-	std::cin >> binary;
-	std::cout << "The number in base 2 is " << binary << std::endl;
+	cout << "Enter a binary number: ";
+	cin >> binary;
+	cout << "The number in base 2 is " << binary << endl;
 	//change the binary string into a vector
 	value = strToInt(binary);
 	//reverse the binary number to properly calculate
-	std::reverse(value.begin(), value.end());
+	reverse(value.begin(), value.end());
 	//loop through the vector and check for a value of 1, then add 2 to the power of the position it was found at
 	num = 0;
 	for (int i = 0; i < value.size(); i++) {
@@ -54,7 +56,7 @@ int main()
 		}
 	}
 	//output the final number in base 10 format
-	std::cout << "The number in base 10 is " << num << std::endl;
+	cout << "The number in base 10 is " << num << endl;
 	return 0;
 }
 //check if number is odd
@@ -67,9 +69,9 @@ bool isOdd(int rem) {
 	}
 }
 //convert string into vector
-std::vector<int> strToInt(std::string str) {
+vector<int> strToInt(string str) {
 	char tmp;
-	std::vector<int> val;
+	vector<int> val;
 	for (int i = 0; i < str.size(); i++) {
 		tmp = str[i];
 		if (tmp == 49)
