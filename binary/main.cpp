@@ -42,18 +42,18 @@ int main()
 	std::cout << "Enter a binary number: ";
 	std::cin >> binary;
 	std::cout << "The number in base 2 is " << binary << std::endl;
-	
+	//change the binary string into a vector
 	value = strToInt(binary);
-
+	//reverse the binary number to properly calculate
 	std::reverse(value.begin(), value.end());
-
+	//loop through the vector and check for a value of 1, then add 2 to the power of the position it was found at
 	num = 0;
 	for (int i = 0; i < value.size(); i++) {
 		if (value.at(i) == 1) {
 			num += pow(2, i);
 		}
 	}
-
+	//output the final number in base 10 format
 	std::cout << "The number in base 10 is " << num << std::endl;
 	return 0;
 }
