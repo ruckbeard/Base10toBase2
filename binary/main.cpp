@@ -5,6 +5,7 @@
 #include <algorithm>
 
 bool isOdd(int rem);
+std::vector<int> strToInt(std::string str);
 
 int main()
 {
@@ -37,6 +38,23 @@ int main()
 	}
 	//output the string
 	std::cout << "The number in base 2 is " << binary << std::endl;
+	//convert a base 2 number into base 10
+	std::cout << "Enter a binary number: ";
+	std::cin >> binary;
+	std::cout << "The number in base 2 is " << binary << std::endl;
+	
+	value = strToInt(binary);
+
+	std::reverse(value.begin(), value.end());
+
+	num = 0;
+	for (int i = 0; i < value.size(); i++) {
+		if (value.at(i) == 1) {
+			num += pow(2, i);
+		}
+	}
+
+	std::cout << "The number in base 10 is " << num << std::endl;
 	return 0;
 }
 //check if number is odd
@@ -47,4 +65,17 @@ bool isOdd(int rem) {
 	else {
 		return true;
 	}
+}
+//convert string into vector
+std::vector<int> strToInt(std::string str) {
+	char tmp;
+	std::vector<int> val;
+	for (int i = 0; i < str.size(); i++) {
+		tmp = str[i];
+		if (tmp == 49)
+			val.push_back(1);
+		else
+			val.push_back(0);
+	}
+	return val;
 }
