@@ -3,81 +3,148 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include <cmath>
 
 using namespace std;
 
-bool isOdd(int rem);
+int getRemainder(int num, int toBase);
 vector<int> strToInt(string str);
+int returnValAsInt(int val);
+char returnValAsChar(int val);
 
 int main()
 {
 	//declare variables
-	int num;
+	int num = 0;
+	int fromBase;
+	int toBase;
 	char tmp;
-	string binary;
+	string tempStr;
+	string result;
 	vector<int> value;
 	//get a whole number from user to conver into base 2
-	cout << "Enter a whole number: ";
-	cin >> num;
-	cout << "The number is in base 10 is " << num << "\n";
-	//right shift num until it equals 1 and check if even or odd, add binary digit accordingly to vector
-	while (num != 1) {
-		if (isOdd(num) == true) {
-			value.push_back(49);
-		} else {
-			value.push_back(48);
+	cout << "Enter the base you want to convert from: ";
+	cin >> fromBase;
+	cout << "Enter the base you want to convert to: ";
+	cin >> toBase;
+	cout << "Enter the number you want to convert: ";
+	if (fromBase != 10) {
+		cin >> tempStr;
+		for (int i = 0; i < tempStr.size(); i++) {
+			vector<int> tmp = strToInt(tempStr);
+			reverse(tmp.begin(), tmp.end());
+			num += tmp[i] * pow(fromBase, i);
 		}
-		num = num >> 1;
 	}
-	//add last digit to the number, always is 1
-	value.push_back(49);
+	else {
+		cin >> num;
+	}
+	//right shift num until it equals 1 and check if even or odd, add binary digit accordingly to vector
+	while (num > 1) {
+		value.push_back(returnValAsChar(getRemainder(num, toBase)));
+		num = num / toBase;
+	}
+	if (num == 1) {
+		value.push_back(49);
+	}
 	//reverse vector
 	reverse(value.begin(), value.end());
 	//change vector<int> into string
 	for (int i = 0; i < value.size(); i++) {
 		tmp = value[i];
-		binary += tmp;
+		result += tmp;
 	}
 	//output the string
-	cout << "The number in base 2 is " << binary << endl;
-	//convert a base 2 number into base 10
-	cout << "Enter a binary number: ";
-	cin >> binary;
-	cout << "The number in base 2 is " << binary << endl;
-	//change the binary string into a vector
-	value = strToInt(binary);
-	//reverse the binary number to properly calculate
-	reverse(value.begin(), value.end());
-	//loop through the vector and check for a value of 1, then add 2 to the power of the position it was found at
-	num = 0;
-	for (int i = 0; i < value.size(); i++) {
-		if (value.at(i) == 1) {
-			num += pow(2, i);
-		}
-	}
-	//output the final number in base 10 format
-	cout << "The number in base 10 is " << num << endl;
+	cout << "The number in base " << toBase << " is " << result << endl;
 	return 0;
 }
 //check if number is odd
-bool isOdd(int rem) {
-	if (rem % 2 == 0) {
-		return false;
-	}
-	else {
-		return true;
-	}
+int getRemainder(int num, int toBase) {
+	int val = num % toBase;
+	return val;
 }
+
 //convert string into vector
 vector<int> strToInt(string str) {
 	char tmp;
 	vector<int> val;
 	for (int i = 0; i < str.size(); i++) {
 		tmp = str[i];
-		if (tmp == 49)
-			val.push_back(1);
-		else
-			val.push_back(0);
+		val.push_back(returnValAsInt(tmp));
 	}
+	return val;
+}
+
+int returnValAsInt(int tmp) {
+	int val = 0;
+	if (tmp == 48)
+		val = 0;
+	else if (tmp == 49)
+		val = 1;
+	else if (tmp == 50)
+		val = 2;
+	else if (tmp == 51)
+		val = 3;
+	else if (tmp == 52)
+		val = 4;
+	else if (tmp == 53)
+		val = 5;
+	else if (tmp == 54)
+		val = 6;
+	else if (tmp == 55)
+		val = 7;
+	else if (tmp == 56)
+		val = 8;
+	else if (tmp == 57)
+		val = 9;
+	else if (tmp == 65)
+		val = 10;
+	else if (tmp == 66)
+		val = 11;
+	else if (tmp == 67)
+		val = 12;
+	else if (tmp == 68)
+		val = 13;
+	else if (tmp == 69)
+		val = 14;
+	else if (tmp == 70)
+		val = 15;
+	return val;
+}
+
+char returnValAsChar(int tmp) {
+	char val = 0;
+	if (tmp == 0)
+		val = 48;
+	else if (tmp == 1)
+		val = 49;
+	else if (tmp == 2)
+		val = 50;
+	else if (tmp == 3)
+		val = 51;
+	else if (tmp == 4)
+		val = 52;
+	else if (tmp == 5)
+		val = 53;
+	else if (tmp == 6)
+		val = 54;
+	else if (tmp == 7)
+		val = 55;
+	else if (tmp == 8)
+		val = 56;
+	else if (tmp == 9)
+		val = 57;
+	else if (tmp == 10)
+		val = 65;
+	else if (tmp == 11)
+		val = 66;
+	else if (tmp == 12)
+		val = 67;
+	else if (tmp == 13)
+		val = 68;
+	else if (tmp == 14)
+		val = 69;
+	else if (tmp == 15)
+		val = 70;
 	return val;
 }
