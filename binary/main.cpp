@@ -22,12 +22,13 @@ int main()
 	string tempStr;
 	string result;
 	vector<int> value;
-	//get a whole number from user to conver into base 2
+	//get the base to convert from, the base to convert to, and the number to convert
 	cout << "Enter the base you want to convert from: ";
 	cin >> fromBase;
 	cout << "Enter the base you want to convert to: ";
 	cin >> toBase;
 	cout << "Enter the number you want to convert: ";
+	//if the base to convert from is not base 10, convert the number to base 10
 	if (fromBase != 10) {
 		cin >> tempStr;
 		for (int i = 0; i < tempStr.size(); i++) {
@@ -39,15 +40,16 @@ int main()
 	else {
 		cin >> num;
 	}
-	//right shift num until it equals 1 and check if even or odd, add binary digit accordingly to vector
+	//find the remainder
 	while (num > 1) {
 		value.push_back(returnValAsChar(getRemainder(num, toBase)));
 		num = num / toBase;
 	}
+	//if you are left with 1, add it to the number
 	if (num == 1) {
 		value.push_back(49);
 	}
-	//reverse vector
+	//reverse vector for proper format
 	reverse(value.begin(), value.end());
 	//change vector<int> into string
 	for (int i = 0; i < value.size(); i++) {
@@ -63,7 +65,6 @@ int getRemainder(int num, int toBase) {
 	int val = num % toBase;
 	return val;
 }
-
 //convert string into vector
 vector<int> strToInt(string str) {
 	char tmp;
@@ -74,7 +75,7 @@ vector<int> strToInt(string str) {
 	}
 	return val;
 }
-
+//return char val as int
 int returnValAsInt(int tmp) {
 	int val = 0;
 	if (tmp == 48)
@@ -111,7 +112,7 @@ int returnValAsInt(int tmp) {
 		val = 15;
 	return val;
 }
-
+//return int val as char
 char returnValAsChar(int tmp) {
 	char val = 0;
 	if (tmp == 0)
