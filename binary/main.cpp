@@ -11,34 +11,63 @@ int getRemainder(int num, int toBase);
 vector<int> strToInt(string str);
 int returnValAsInt(int val);
 char returnValAsChar(int val);
+int checkNumber(int fromBase, int num, int pos, int size);
 
 int main()
 {
 	//declare variables
-	int num = 0;
-	int fromBase;
-	int toBase;
+	unsigned int num = 0;
+	unsigned int fromBase;
+	unsigned int toBase;
+	int check;
 	char tmp;
 	string tempStr;
 	string result;
 	vector<int> value;
+	bool fromBaseCorrect = false;
+	bool toBaseCorrect = false;
+	bool numberCorrect = false;
 	//get the base to convert from, the base to convert to, and the number to convert
-	cout << "Enter the base you want to convert from: ";
-	cin >> fromBase;
-	cout << "Enter the base you want to convert to: ";
-	cin >> toBase;
-	cout << "Enter the number you want to convert: ";
-	//if the base to convert from is not base 10, convert the number to base 10
-	if (fromBase != 10) {
-		cin >> tempStr;
-		for (int i = 0; i < tempStr.size(); i++) {
-			vector<int> tmp = strToInt(tempStr);
-			reverse(tmp.begin(), tmp.end());
-			num += tmp[i] * pow(fromBase, i);
+	while (fromBaseCorrect == false) {
+		cout << "Enter the base you want to convert from: ";
+		cin >> fromBase;
+		if (fromBase >= 2 && fromBase <= 16) {
+			fromBaseCorrect = true;
+		}
+		else {
+			cout << "You must enter 2-16." << endl;
 		}
 	}
-	else {
-		cin >> num;
+	while (toBaseCorrect == false) {
+		cout << "Enter the base you want to convert to: ";
+		cin >> toBase;
+		if (toBase >= 2 && toBase <= 16) {
+			toBaseCorrect = true;
+		}
+		else {
+			cout << "You must enter 2-16." << endl;
+		}
+	}
+	int x = 0;
+	cout << "Enter the number you want to convert: ";
+	cin >> tempStr;
+	while (numberCorrect == false) {
+		check = checkNumber(fromBase, tempStr[x], x, tempStr.size());
+		if (check == 1) {
+			x = 0;
+			cout << "Check your number, it does not match the base you chose to convert from.";
+			cout << "Enter the number you want to convert: ";
+			cin >> tempStr;
+		}
+		else if (check == 2) {
+			numberCorrect = true;
+		}
+		x++;
+	}
+	for (int i = 0; i < tempStr.size(); i++) {
+		vector<int> tmp = strToInt(tempStr);
+		reverse(tmp.begin(), tmp.end());
+		num += tmp[i] * pow(fromBase, i);
 	}
 	//find the remainder
 	while (num > 1) {
@@ -148,4 +177,18 @@ char returnValAsChar(int tmp) {
 	else if (tmp == 15)
 		val = 70;
 	return val;
+}
+
+int checkNumber(int fromBase, int num, int pos, int size) {
+	num = returnValAsInt(num);
+	if (num >= 0 && num < fromBase && pos != size){
+		return 0;
+	}
+	else if (num >= 0 && num < fromBase && pos == size) {
+		return 2;
+	}
+	else {
+		return 1;
+	}
+		
 }
